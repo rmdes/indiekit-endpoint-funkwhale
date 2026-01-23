@@ -1,0 +1,145 @@
+{% extends "document.njk" %}
+
+{% block content %}
+  {% if error %}
+    {{ prose({ text: error.message }) }}
+  {% else %}
+    {# Now Playing / Recently Played #}
+    {% if nowPlaying %}
+    <section class="funkwhale-section funkwhale-now-playing">
+      <h2>
+        {% if nowPlaying.status == "now-playing" %}
+          <span class="funkwhale-status funkwhale-status--playing">
+            <span class="funkwhale-bars">
+              <span></span><span></span><span></span>
+            </span>
+            {{ __("funkwhale.nowPlaying") }}
+          </span>
+        {% else %}
+          {{ __("funkwhale.recentlyPlayed") }}
+        {% endif %}
+      </h2>
+      <article class="funkwhale-track funkwhale-track--featured">
+        {% if nowPlaying.coverUrl %}
+        <img src="{{ nowPlaying.coverUrl }}" alt="" class="funkwhale-track__cover" loading="lazy">
+        {% else %}
+        <div class="funkwhale-track__cover funkwhale-track__cover--placeholder"></div>
+        {% endif %}
+        <div class="funkwhale-track__info">
+          <a href="{{ nowPlaying.trackUrl }}" class="funkwhale-track__title" target="_blank" rel="noopener">
+            {{ nowPlaying.artist }} - {{ nowPlaying.track }}
+          </a>
+          {% if nowPlaying.album %}
+          <p class="funkwhale-track__album">{{ nowPlaying.album }}</p>
+          {% endif %}
+          <small class="funkwhale-meta">
+            <span>{{ nowPlaying.duration }}</span>
+            <span>{{ nowPlaying.relativeTime }}</span>
+          </small>
+        </div>
+      </article>
+    </section>
+    {% endif %}
+
+    {# Quick Stats Summary #}
+    {% if summary %}
+    <section class="funkwhale-section funkwhale-summary">
+      <h2>{{ __("funkwhale.stats") }}</h2>
+      <div class="funkwhale-stats-grid">
+        <div class="funkwhale-stat">
+          <span class="funkwhale-stat__value">{{ summary.totalPlays }}</span>
+          <span class="funkwhale-stat__label">{{ __("funkwhale.plays") }}</span>
+        </div>
+        <div class="funkwhale-stat">
+          <span class="funkwhale-stat__value">{{ summary.uniqueTracks }}</span>
+          <span class="funkwhale-stat__label">{{ __("funkwhale.tracks") }}</span>
+        </div>
+        <div class="funkwhale-stat">
+          <span class="funkwhale-stat__value">{{ summary.uniqueArtists }}</span>
+          <span class="funkwhale-stat__label">{{ __("funkwhale.artists") }}</span>
+        </div>
+      </div>
+      <div class="button-grid">
+        {{ button({
+          classes: "button--secondary",
+          href: mountPath + "/stats",
+          text: __("funkwhale.viewStats")
+        }) }}
+      </div>
+    </section>
+    {% endif %}
+
+    {# Recent Listenings #}
+    <section class="funkwhale-section">
+      <h2>{{ __("funkwhale.listenings") }}</h2>
+      {% if listenings and listenings.length > 0 %}
+      <ul class="funkwhale-list">
+        {% for listening in listenings %}
+        <li class="funkwhale-list__item">
+          {% if listening.coverUrl %}
+          <img src="{{ listening.coverUrl }}" alt="" class="funkwhale-list__cover" loading="lazy">
+          {% else %}
+          <div class="funkwhale-list__cover funkwhale-list__cover--placeholder"></div>
+          {% endif %}
+          <div class="funkwhale-list__info">
+            <a href="{{ listening.trackUrl }}" class="funkwhale-list__title" target="_blank" rel="noopener">
+              {{ listening.artist }} - {{ listening.track }}
+            </a>
+            <small class="funkwhale-meta">{{ listening.relativeTime }}</small>
+          </div>
+          {% if listening.status == "now-playing" %}
+          {{ badge({ color: "green", text: __("funkwhale.nowPlaying") }) }}
+          {% elif listening.status == "recently-played" %}
+          {{ badge({ color: "blue", text: __("funkwhale.recentlyPlayed") }) }}
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="button-grid">
+        {{ button({
+          classes: "button--secondary",
+          href: mountPath + "/listenings",
+          text: __("funkwhale.viewAll")
+        }) }}
+      </div>
+      {% else %}
+      {{ prose({ text: __("funkwhale.noRecentPlays") }) }}
+      {% endif %}
+    </section>
+
+    {# Favorites #}
+    <section class="funkwhale-section">
+      <h2>{{ __("funkwhale.favorites") }}</h2>
+      {% if favorites and favorites.length > 0 %}
+      <ul class="funkwhale-list">
+        {% for favorite in favorites %}
+        <li class="funkwhale-list__item">
+          {% if favorite.coverUrl %}
+          <img src="{{ favorite.coverUrl }}" alt="" class="funkwhale-list__cover" loading="lazy">
+          {% else %}
+          <div class="funkwhale-list__cover funkwhale-list__cover--placeholder"></div>
+          {% endif %}
+          <div class="funkwhale-list__info">
+            <a href="{{ favorite.trackUrl }}" class="funkwhale-list__title" target="_blank" rel="noopener">
+              {{ favorite.artist }} - {{ favorite.track }}
+            </a>
+            {% if favorite.album %}
+            <small class="funkwhale-meta">{{ favorite.album }}</small>
+            {% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="button-grid">
+        {{ button({
+          classes: "button--secondary",
+          href: mountPath + "/favorites",
+          text: __("funkwhale.viewAll")
+        }) }}
+      </div>
+      {% else %}
+      {{ prose({ text: __("funkwhale.noFavorites") }) }}
+      {% endif %}
+    </section>
+  {% endif %}
+{% endblock %}

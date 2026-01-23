@@ -1,0 +1,83 @@
+{#
+  Now Playing Widget
+  Fetches data from /funkwhale/api/now-playing
+  Include this in your Eleventy templates
+#}
+<div class="funkwhale-now-playing-widget" id="funkwhale-now-playing">
+  <div class="funkwhale-now-playing-widget__loading">
+    Loading...
+  </div>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('funkwhale-now-playing');
+  const endpoint = '{{ application.funkwhaleEndpoint or "/funkwhale" }}/api/now-playing';
+
+  fetch(endpoint)
+    .then(res => res.json())
+    .then(data => {
+      container.textContent = '';
+
+      if (!data.track) {
+        const empty = document.createElement('p');
+        empty.className = 'funkwhale-widget__empty';
+        empty.textContent = 'No recent plays';
+        container.appendChild(empty);
+        return;
+      }
+
+      const widget = document.createElement('div');
+      widget.className = 'funkwhale-widget' + (data.status === 'now-playing' ? ' funkwhale-widget--playing' : '');
+
+      if (data.status === 'now-playing') {
+        const bars = document.createElement('div');
+        bars.className = 'funkwhale-bars';
+        for (let i = 0; i < 3; i++) {
+          bars.appendChild(document.createElement('span'));
+        }
+        widget.appendChild(bars);
+      }
+
+      const status = document.createElement('span');
+      status.className = 'funkwhale-widget__status';
+      status.textContent = data.status === 'now-playing' ? 'Now Playing' :
+                           data.status === 'recently-played' ? 'Recently Played' : 'Last Played';
+      widget.appendChild(status);
+
+      if (data.coverUrl) {
+        const img = document.createElement('img');
+        img.src = data.coverUrl;
+        img.alt = '';
+        img.className = 'funkwhale-widget__cover';
+        widget.appendChild(img);
+      }
+
+      const info = document.createElement('div');
+      info.className = 'funkwhale-widget__info';
+
+      const link = document.createElement('a');
+      link.href = data.trackUrl;
+      link.className = 'funkwhale-widget__title';
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.textContent = data.artist + ' - ' + data.track;
+      info.appendChild(link);
+
+      const time = document.createElement('span');
+      time.className = 'funkwhale-widget__time';
+      time.textContent = data.relativeTime;
+      info.appendChild(time);
+
+      widget.appendChild(info);
+      container.appendChild(widget);
+    })
+    .catch(err => {
+      container.textContent = '';
+      const error = document.createElement('p');
+      error.className = 'funkwhale-widget__error';
+      error.textContent = 'Could not load';
+      container.appendChild(error);
+    });
+})();
+</script>

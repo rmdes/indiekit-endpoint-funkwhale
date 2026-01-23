@@ -1,0 +1,65 @@
+{% extends "document.njk" %}
+
+{% block content %}
+  {% if error %}
+    {{ prose({ text: error.message }) }}
+  {% else %}
+    <section class="funkwhale-section">
+      {% if listenings and listenings.length > 0 %}
+      <ul class="funkwhale-list funkwhale-list--full">
+        {% for listening in listenings %}
+        <li class="funkwhale-list__item">
+          {% if listening.coverUrl %}
+          <img src="{{ listening.coverUrl }}" alt="" class="funkwhale-list__cover" loading="lazy">
+          {% else %}
+          <div class="funkwhale-list__cover funkwhale-list__cover--placeholder"></div>
+          {% endif %}
+          <div class="funkwhale-list__info">
+            <a href="{{ listening.trackUrl }}" class="funkwhale-list__title" target="_blank" rel="noopener">
+              {{ listening.artist }} - {{ listening.track }}
+            </a>
+            {% if listening.album %}
+            <p class="funkwhale-list__album">{{ listening.album }}</p>
+            {% endif %}
+            <small class="funkwhale-meta">
+              <span>{{ listening.duration }}</span>
+              <span>{{ listening.relativeTime }}</span>
+            </small>
+          </div>
+          {% if listening.status == "now-playing" %}
+          {{ badge({ color: "green", text: __("funkwhale.nowPlaying") }) }}
+          {% elif listening.status == "recently-played" %}
+          {{ badge({ color: "blue", text: __("funkwhale.recentlyPlayed") }) }}
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+
+      {# Pagination #}
+      {% if pagination %}
+      <nav class="funkwhale-pagination">
+        {% if pagination.hasPrev %}
+        <a href="?page={{ pagination.current - 1 }}" class="button button--secondary">Previous</a>
+        {% endif %}
+        <span class="funkwhale-pagination__info">
+          Page {{ pagination.current }} of {{ pagination.total }}
+        </span>
+        {% if pagination.hasNext %}
+        <a href="?page={{ pagination.current + 1 }}" class="button button--secondary">Next</a>
+        {% endif %}
+      </nav>
+      {% endif %}
+      {% else %}
+      {{ prose({ text: __("funkwhale.noRecentPlays") }) }}
+      {% endif %}
+    </section>
+
+    <div class="button-grid">
+      {{ button({
+        classes: "button--secondary",
+        href: mountPath,
+        text: "Back to Dashboard"
+      }) }}
+    </div>
+  {% endif %}
+{% endblock %}

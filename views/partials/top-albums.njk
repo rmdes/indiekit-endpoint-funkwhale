@@ -1,0 +1,20 @@
+{% if topAlbums and topAlbums.length > 0 %}
+<ul class="funkwhale-album-grid">
+  {% for album in topAlbums %}
+  <li class="funkwhale-album">
+    {% if album.coverUrl %}
+    <img src="{{ album.coverUrl }}" alt="" class="funkwhale-album__cover" loading="lazy">
+    {% else %}
+    <div class="funkwhale-album__cover funkwhale-album__cover--placeholder"></div>
+    {% endif %}
+    <div class="funkwhale-album__info">
+      <span class="funkwhale-album__title">{{ album.title }}</span>
+      <span class="funkwhale-album__artist">{{ album.artist }}</span>
+      <small class="funkwhale-meta">{{ album.playCount }} {{ __("funkwhale.plays") }}</small>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+{{ prose({ text: "No data yet" }) }}
+{% endif %}

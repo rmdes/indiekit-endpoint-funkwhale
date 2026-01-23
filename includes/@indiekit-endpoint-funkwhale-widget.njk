@@ -1,0 +1,12 @@
+{% call widget({
+  title: __("funkwhale.title")
+}) %}
+  <p class="prose">{{ __("funkwhale.widget.description") }}</p>
+  <div class="button-grid">
+    {{ button({
+      classes: "button--secondary-on-offset",
+      href: application.funkwhaleEndpoint or "/funkwhale",
+      text: __("funkwhale.widget.view")
+    }) }}
+  </div>
+{% endcall %}

@@ -1,0 +1,13 @@
+{% if topArtists and topArtists.length > 0 %}
+<ol class="funkwhale-top-list">
+  {% for artist in topArtists %}
+  <li class="funkwhale-top-list__item">
+    <span class="funkwhale-top-list__rank">{{ loop.index }}</span>
+    <span class="funkwhale-top-list__name">{{ artist.name }}</span>
+    <span class="funkwhale-top-list__count">{{ artist.playCount }} {{ __("funkwhale.plays") }}</span>
+  </li>
+  {% endfor %}
+</ol>
+{% else %}
+{{ prose({ text: "No data yet" }) }}
+{% endif %}

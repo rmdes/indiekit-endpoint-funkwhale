@@ -1,0 +1,75 @@
+{#
+  Stats Widget
+  Fetches data from /funkwhale/api/stats
+  Include this in your Eleventy templates for a sidebar widget
+#}
+<div class="funkwhale-stats-widget" id="funkwhale-stats">
+  <div class="funkwhale-stats-widget__loading">
+    Loading stats...
+  </div>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('funkwhale-stats');
+  const endpoint = '{{ application.funkwhaleEndpoint or "/funkwhale" }}/api/stats';
+
+  fetch(endpoint)
+    .then(res => res.json())
+    .then(data => {
+      container.textContent = '';
+      const all = data.summary?.all || {};
+
+      const grid = document.createElement('div');
+      grid.className = 'funkwhale-stats-widget__grid';
+
+      // Plays stat
+      const playsStat = document.createElement('div');
+      playsStat.className = 'funkwhale-stats-widget__stat';
+      const playsValue = document.createElement('span');
+      playsValue.className = 'funkwhale-stats-widget__value';
+      playsValue.textContent = all.totalPlays || 0;
+      const playsLabel = document.createElement('span');
+      playsLabel.className = 'funkwhale-stats-widget__label';
+      playsLabel.textContent = 'plays';
+      playsStat.appendChild(playsValue);
+      playsStat.appendChild(playsLabel);
+      grid.appendChild(playsStat);
+
+      // Artists stat
+      const artistsStat = document.createElement('div');
+      artistsStat.className = 'funkwhale-stats-widget__stat';
+      const artistsValue = document.createElement('span');
+      artistsValue.className = 'funkwhale-stats-widget__value';
+      artistsValue.textContent = all.uniqueArtists || 0;
+      const artistsLabel = document.createElement('span');
+      artistsLabel.className = 'funkwhale-stats-widget__label';
+      artistsLabel.textContent = 'artists';
+      artistsStat.appendChild(artistsValue);
+      artistsStat.appendChild(artistsLabel);
+      grid.appendChild(artistsStat);
+
+      // Duration stat
+      const durationStat = document.createElement('div');
+      durationStat.className = 'funkwhale-stats-widget__stat';
+      const durationValue = document.createElement('span');
+      durationValue.className = 'funkwhale-stats-widget__value';
+      durationValue.textContent = all.totalDurationFormatted || '0h';
+      const durationLabel = document.createElement('span');
+      durationLabel.className = 'funkwhale-stats-widget__label';
+      durationLabel.textContent = 'listened';
+      durationStat.appendChild(durationValue);
+      durationStat.appendChild(durationLabel);
+      grid.appendChild(durationStat);
+
+      container.appendChild(grid);
+    })
+    .catch(err => {
+      container.textContent = '';
+      const error = document.createElement('p');
+      error.className = 'funkwhale-widget__error';
+      error.textContent = 'Could not load stats';
+      container.appendChild(error);
+    });
+})();
+</script>
