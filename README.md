@@ -1,50 +1,54 @@
 # @rmdes/indiekit-endpoint-funkwhale
 
+[![npm version](https://img.shields.io/npm/v/@rmdes/indiekit-endpoint-funkwhale.svg)](https://www.npmjs.com/package/@rmdes/indiekit-endpoint-funkwhale)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Funkwhale listening activity endpoint for [Indiekit](https://getindiekit.com/).
 
 Display your Funkwhale listening history, favorite tracks, and listening statistics on your IndieWeb site.
 
-## Features
-
-- **Now Playing Widget** - Shows currently playing or recently played tracks
-- **Listening History** - Browse your listening history with album art
-- **Favorites** - Display your favorite tracks
-- **Statistics** - View listening stats with tabbed interface:
-  - All Time / This Month / This Week views
-  - Top Artists and Albums
-  - Listening trend charts
-- **Public JSON API** - For integration with static site generators like Eleventy
-
 ## Installation
+
+Install from npm:
 
 ```bash
 npm install @rmdes/indiekit-endpoint-funkwhale
 ```
+
+## Features
+
+- **Admin Dashboard** - Overview of your listening activity in Indiekit's admin UI
+- **Now Playing Widget** - Shows currently playing or recently played tracks
+- **Listening History** - Browse your listening history with album art
+- **Favorites** - Display your favorite tracks
+- **Statistics** - View listening stats (plays, unique tracks, unique artists)
+- **Background Sync** - Automatically syncs listening data to MongoDB
+- **Public JSON API** - For integration with static site generators like Eleventy
 
 ## Configuration
 
 Add to your `indiekit.config.js`:
 
 ```javascript
+import FunkwhaleEndpoint from "@rmdes/indiekit-endpoint-funkwhale";
+
 export default {
   plugins: [
-    "@rmdes/indiekit-endpoint-funkwhale",
+    new FunkwhaleEndpoint({
+      mountPath: "/funkwhale",
+      instanceUrl: process.env.FUNKWHALE_INSTANCE,
+      username: process.env.FUNKWHALE_USERNAME,
+      token: process.env.FUNKWHALE_TOKEN,
+      cacheTtl: 900_000,      // 15 minutes
+      syncInterval: 300_000,  // 5 minutes
+      limits: {
+        listenings: 20,
+        favorites: 20,
+        topArtists: 10,
+        topAlbums: 10
+      }
+    }),
   ],
-
-  "@rmdes/indiekit-endpoint-funkwhale": {
-    mountPath: "/funkwhale",
-    instanceUrl: process.env.FUNKWHALE_INSTANCE,
-    username: process.env.FUNKWHALE_USERNAME,
-    token: process.env.FUNKWHALE_TOKEN,
-    cacheTtl: 900_000,  // 15 minutes
-    syncInterval: 300_000,  // 5 minutes
-    limits: {
-      listenings: 20,
-      favorites: 20,
-      topArtists: 10,
-      topAlbums: 10
-    }
-  },
 };
 ```
 
@@ -65,24 +69,45 @@ export default {
 
 ## Routes
 
-### Protected Routes (require authentication)
+### Admin Routes (require authentication)
 
 | Route | Description |
 |-------|-------------|
-| `GET /funkwhale/` | Dashboard with overview |
-| `GET /funkwhale/listenings` | Full listening history |
-| `GET /funkwhale/favorites` | Favorite tracks |
-| `GET /funkwhale/stats` | Statistics with tabs |
+| `GET /funkwhale/` | Dashboard overview with stats, recent plays, favorites |
+| `POST /funkwhale/sync` | Trigger manual sync |
 
 ### Public API Routes (JSON)
+
+These endpoints are publicly accessible and can be used by static site generators like Eleventy to display listening activity on your site.
 
 | Route | Description |
 |-------|-------------|
 | `GET /funkwhale/api/now-playing` | Current/recent track |
 | `GET /funkwhale/api/listenings` | Recent listenings |
 | `GET /funkwhale/api/favorites` | Favorites list |
-| `GET /funkwhale/api/stats` | All statistics |
-| `GET /funkwhale/api/stats/trends` | Trend data for charts |
+| `GET /funkwhale/api/stats` | All statistics (summary, top artists, top albums) |
+| `GET /funkwhale/api/stats/trends` | Trend data for charts (30 days) |
+
+### Example: Eleventy Integration
+
+Fetch data from the public API in your Eleventy `_data` file:
+
+```javascript
+// _data/funkwhale.js
+import EleventyFetch from "@11ty/eleventy-fetch";
+
+export default async function() {
+  const baseUrl = process.env.SITE_URL || "https://example.com";
+
+  const [nowPlaying, listenings, stats] = await Promise.all([
+    EleventyFetch(`${baseUrl}/funkwhale/api/now-playing`, { duration: "15m", type: "json" }),
+    EleventyFetch(`${baseUrl}/funkwhale/api/listenings`, { duration: "15m", type: "json" }),
+    EleventyFetch(`${baseUrl}/funkwhale/api/stats`, { duration: "15m", type: "json" }),
+  ]);
+
+  return { nowPlaying, listenings, stats };
+}
+```
 
 ## Options
 
@@ -108,7 +133,7 @@ export default {
 ## Requirements
 
 - Indiekit >= 1.0.0-beta.25
-- MongoDB (for statistics aggregation)
+- MongoDB (for statistics aggregation and sync)
 - Funkwhale instance with API v2
 
 ## License

@@ -1,16 +1,169 @@
 {% extends "document.njk" %}
 
 {% block content %}
+  <style>
+    /* Inline styles to ensure proper rendering */
+    .fw-section { margin-bottom: 2rem; }
+    .fw-section h2 { margin-bottom: 1rem; }
+
+    /* Stats grid */
+    .fw-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .fw-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+      background: var(--color-offset, #f5f5f5);
+      border-radius: 0.5rem;
+      text-align: center;
+    }
+    .fw-stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-accent, #3b82f6);
+    }
+    .fw-stat-label {
+      font-size: 0.75rem;
+      color: var(--color-text-secondary, #666);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Featured track */
+    .fw-featured {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--color-offset, #f5f5f5);
+      border-radius: 0.5rem;
+      align-items: flex-start;
+    }
+    .fw-featured img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 0.25rem;
+      flex-shrink: 0;
+    }
+    .fw-featured-info { flex: 1; }
+    .fw-featured-title {
+      font-weight: 600;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .fw-featured-title:hover { text-decoration: underline; }
+    .fw-featured-album {
+      margin: 0.25rem 0;
+      color: var(--color-text-secondary, #666);
+      font-size: 0.875rem;
+    }
+    .fw-meta {
+      display: flex;
+      gap: 0.5rem;
+      color: var(--color-text-secondary, #666);
+      font-size: 0.75rem;
+    }
+
+    /* Now playing animation */
+    .fw-playing-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #22c55e;
+    }
+    .fw-bars {
+      display: flex;
+      gap: 2px;
+      align-items: flex-end;
+      height: 16px;
+    }
+    .fw-bars span {
+      width: 3px;
+      background: currentColor;
+      animation: fw-bar 0.5s infinite ease-in-out alternate;
+    }
+    .fw-bars span:nth-child(2) { animation-delay: 0.2s; }
+    .fw-bars span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes fw-bar {
+      from { height: 4px; }
+      to { height: 16px; }
+    }
+
+    /* List */
+    .fw-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1rem 0;
+    }
+    .fw-list-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--color-border, #eee);
+    }
+    .fw-list-item:last-child { border-bottom: none; }
+    .fw-list-item img {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 0.25rem;
+      flex-shrink: 0;
+    }
+    .fw-list-item-placeholder {
+      width: 48px;
+      height: 48px;
+      background: var(--color-border, #ddd);
+      border-radius: 0.25rem;
+      flex-shrink: 0;
+    }
+    .fw-list-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .fw-list-title {
+      display: block;
+      font-weight: 500;
+      text-decoration: none;
+      color: inherit;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .fw-list-title:hover { text-decoration: underline; }
+
+    /* Public link banner */
+    .fw-public-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      background: var(--color-offset, #f5f5f5);
+      border-radius: 0.5rem;
+      margin-top: 2rem;
+    }
+    .fw-public-link p {
+      margin: 0;
+      color: var(--color-text-secondary, #666);
+    }
+  </style>
+
   {% if error %}
     {{ prose({ text: error.message }) }}
   {% else %}
     {# Now Playing / Recently Played #}
     {% if nowPlaying %}
-    <section class="funkwhale-section funkwhale-now-playing">
+    <section class="fw-section">
       <h2>
         {% if nowPlaying.status == "now-playing" %}
-          <span class="funkwhale-status funkwhale-status--playing">
-            <span class="funkwhale-bars">
+          <span class="fw-playing-status">
+            <span class="fw-bars">
               <span></span><span></span><span></span>
             </span>
             {{ __("funkwhale.nowPlaying") }}
@@ -19,20 +172,18 @@
           {{ __("funkwhale.recentlyPlayed") }}
         {% endif %}
       </h2>
-      <article class="funkwhale-track funkwhale-track--featured">
+      <article class="fw-featured">
         {% if nowPlaying.coverUrl %}
-        <img src="{{ nowPlaying.coverUrl }}" alt="" class="funkwhale-track__cover" loading="lazy">
-        {% else %}
-        <div class="funkwhale-track__cover funkwhale-track__cover--placeholder"></div>
+        <img src="{{ nowPlaying.coverUrl }}" alt="" loading="lazy">
         {% endif %}
-        <div class="funkwhale-track__info">
-          <a href="{{ nowPlaying.trackUrl }}" class="funkwhale-track__title" target="_blank" rel="noopener">
+        <div class="fw-featured-info">
+          <a href="{{ nowPlaying.trackUrl }}" class="fw-featured-title" target="_blank" rel="noopener">
             {{ nowPlaying.artist }} - {{ nowPlaying.track }}
           </a>
           {% if nowPlaying.album %}
-          <p class="funkwhale-track__album">{{ nowPlaying.album }}</p>
+          <p class="fw-featured-album">{{ nowPlaying.album }}</p>
           {% endif %}
-          <small class="funkwhale-meta">
+          <small class="fw-meta">
             <span>{{ nowPlaying.duration }}</span>
             <span>{{ nowPlaying.relativeTime }}</span>
           </small>
@@ -42,50 +193,43 @@
     {% endif %}
 
     {# Quick Stats Summary #}
-    {% if summary %}
-    <section class="funkwhale-section funkwhale-summary">
+    {% if hasStats %}
+    <section class="fw-section">
       <h2>{{ __("funkwhale.stats") }}</h2>
-      <div class="funkwhale-stats-grid">
-        <div class="funkwhale-stat">
-          <span class="funkwhale-stat__value">{{ summary.totalPlays }}</span>
-          <span class="funkwhale-stat__label">{{ __("funkwhale.plays") }}</span>
+      <div class="fw-stats-grid">
+        <div class="fw-stat">
+          <span class="fw-stat-value">{{ totalPlays }}</span>
+          <span class="fw-stat-label">{{ __("funkwhale.plays") }}</span>
         </div>
-        <div class="funkwhale-stat">
-          <span class="funkwhale-stat__value">{{ summary.uniqueTracks }}</span>
-          <span class="funkwhale-stat__label">{{ __("funkwhale.tracks") }}</span>
+        <div class="fw-stat">
+          <span class="fw-stat-value">{{ uniqueTracks }}</span>
+          <span class="fw-stat-label">{{ __("funkwhale.tracks") }}</span>
         </div>
-        <div class="funkwhale-stat">
-          <span class="funkwhale-stat__value">{{ summary.uniqueArtists }}</span>
-          <span class="funkwhale-stat__label">{{ __("funkwhale.artists") }}</span>
+        <div class="fw-stat">
+          <span class="fw-stat-value">{{ uniqueArtists }}</span>
+          <span class="fw-stat-label">{{ __("funkwhale.artists") }}</span>
         </div>
-      </div>
-      <div class="button-grid">
-        {{ button({
-          classes: "button--secondary",
-          href: mountPath + "/stats",
-          text: __("funkwhale.viewStats")
-        }) }}
       </div>
     </section>
     {% endif %}
 
     {# Recent Listenings #}
-    <section class="funkwhale-section">
+    <section class="fw-section">
       <h2>{{ __("funkwhale.listenings") }}</h2>
       {% if listenings and listenings.length > 0 %}
-      <ul class="funkwhale-list">
+      <ul class="fw-list">
         {% for listening in listenings %}
-        <li class="funkwhale-list__item">
+        <li class="fw-list-item">
           {% if listening.coverUrl %}
-          <img src="{{ listening.coverUrl }}" alt="" class="funkwhale-list__cover" loading="lazy">
+          <img src="{{ listening.coverUrl }}" alt="" loading="lazy">
           {% else %}
-          <div class="funkwhale-list__cover funkwhale-list__cover--placeholder"></div>
+          <div class="fw-list-item-placeholder"></div>
           {% endif %}
-          <div class="funkwhale-list__info">
-            <a href="{{ listening.trackUrl }}" class="funkwhale-list__title" target="_blank" rel="noopener">
+          <div class="fw-list-info">
+            <a href="{{ listening.trackUrl }}" class="fw-list-title" target="_blank" rel="noopener">
               {{ listening.artist }} - {{ listening.track }}
             </a>
-            <small class="funkwhale-meta">{{ listening.relativeTime }}</small>
+            <small class="fw-meta">{{ listening.relativeTime }}</small>
           </div>
           {% if listening.status == "now-playing" %}
           {{ badge({ color: "green", text: __("funkwhale.nowPlaying") }) }}
@@ -95,51 +239,47 @@
         </li>
         {% endfor %}
       </ul>
-      <div class="button-grid">
-        {{ button({
-          classes: "button--secondary",
-          href: mountPath + "/listenings",
-          text: __("funkwhale.viewAll")
-        }) }}
-      </div>
       {% else %}
       {{ prose({ text: __("funkwhale.noRecentPlays") }) }}
       {% endif %}
     </section>
 
     {# Favorites #}
-    <section class="funkwhale-section">
+    <section class="fw-section">
       <h2>{{ __("funkwhale.favorites") }}</h2>
       {% if favorites and favorites.length > 0 %}
-      <ul class="funkwhale-list">
+      <ul class="fw-list">
         {% for favorite in favorites %}
-        <li class="funkwhale-list__item">
+        <li class="fw-list-item">
           {% if favorite.coverUrl %}
-          <img src="{{ favorite.coverUrl }}" alt="" class="funkwhale-list__cover" loading="lazy">
+          <img src="{{ favorite.coverUrl }}" alt="" loading="lazy">
           {% else %}
-          <div class="funkwhale-list__cover funkwhale-list__cover--placeholder"></div>
+          <div class="fw-list-item-placeholder"></div>
           {% endif %}
-          <div class="funkwhale-list__info">
-            <a href="{{ favorite.trackUrl }}" class="funkwhale-list__title" target="_blank" rel="noopener">
+          <div class="fw-list-info">
+            <a href="{{ favorite.trackUrl }}" class="fw-list-title" target="_blank" rel="noopener">
               {{ favorite.artist }} - {{ favorite.track }}
             </a>
             {% if favorite.album %}
-            <small class="funkwhale-meta">{{ favorite.album }}</small>
+            <small class="fw-meta">{{ favorite.album }}</small>
             {% endif %}
           </div>
         </li>
         {% endfor %}
       </ul>
-      <div class="button-grid">
-        {{ button({
-          classes: "button--secondary",
-          href: mountPath + "/favorites",
-          text: __("funkwhale.viewAll")
-        }) }}
-      </div>
       {% else %}
       {{ prose({ text: __("funkwhale.noFavorites") }) }}
       {% endif %}
     </section>
+
+    {# Link to public page #}
+    <div class="fw-public-link">
+      <p>{{ __("funkwhale.widget.description") }}</p>
+      {{ button({
+        href: publicUrl,
+        text: __("funkwhale.widget.view"),
+        target: "_blank"
+      }) }}
+    </div>
   {% endif %}
 {% endblock %}
