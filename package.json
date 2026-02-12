@@ -1,6 +1,6 @@
 {
   "name": "@rmdes/indiekit-endpoint-funkwhale",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Funkwhale listening activity endpoint for Indiekit. Display listening history, favorites, and statistics.",
   "keywords": [
     "indiekit",
@@ -34,6 +34,7 @@
     ".": "./index.js"
   },
   "files": [
+    "assets",
     "includes",
     "lib",
     "locales",
