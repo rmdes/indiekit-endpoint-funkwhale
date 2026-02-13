@@ -1,0 +1,37 @@
+{
+  "funkwhale": {
+    "title": "Funkwhale",
+    "listenings": "收听历史",
+    "favorites": "收藏",
+    "stats": "统计",
+    "nowPlaying": "正在播放",
+    "recentlyPlayed": "最近播放",
+    "lastPlayed": "上次播放",
+    "allTime": "全部时间",
+    "thisWeek": "本周",
+    "thisMonth": "本月",
+    "trends": "趋势",
+    "listeningTrend": "收听趋势（30天）",
+    "topArtists": "热门艺人",
+    "topAlbums": "热门专辑",
+    "plays": "次播放",
+    "tracks": "首歌曲",
+    "artists": "位艺人",
+    "albums": "张专辑",
+    "listeningTime": "收听时长",
+    "noRecentPlays": "最近没有播放音乐",
+    "noFavorites": "还没有收藏的歌曲",
+    "viewAll": "查看全部",
+    "viewStats": "查看统计",
+    "sync": "立即同步",
+    "lastSync": "上次同步",
+    "error": {
+      "connection": "无法连接到 Funkwhale",
+      "noConfig": "Funkwhale 端点配置不正确"
+    },
+    "widget": {
+      "description": "在公开页面查看完整收听活动",
+      "view": "查看公开页面"
+    }
+  }
+}

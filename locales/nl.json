@@ -1,0 +1,37 @@
+{
+  "funkwhale": {
+    "title": "Funkwhale",
+    "listenings": "Luistergeschiedenis",
+    "favorites": "Favorieten",
+    "stats": "Statistieken",
+    "nowPlaying": "Nu aan het spelen",
+    "recentlyPlayed": "Recent afgespeeld",
+    "lastPlayed": "Laatst afgespeeld",
+    "allTime": "Alle tijden",
+    "thisWeek": "Deze week",
+    "thisMonth": "Deze maand",
+    "trends": "Trends",
+    "listeningTrend": "Luistertrend (30 dagen)",
+    "topArtists": "Topartiesten",
+    "topAlbums": "Topalbums",
+    "plays": "afspelingen",
+    "tracks": "nummers",
+    "artists": "artiesten",
+    "albums": "albums",
+    "listeningTime": "Luistertijd",
+    "noRecentPlays": "Geen muziek recent afgespeeld",
+    "noFavorites": "Nog geen favoriete nummers",
+    "viewAll": "Alles bekijken",
+    "viewStats": "Statistieken bekijken",
+    "sync": "Nu synchroniseren",
+    "lastSync": "Laatste synchronisatie",
+    "error": {
+      "connection": "Kon geen verbinding maken met Funkwhale",
+      "noConfig": "Funkwhale-eindpunt niet correct geconfigureerd"
+    },
+    "widget": {
+      "description": "Bekijk volledige luisteractiviteit op de openbare pagina",
+      "view": "Openbare pagina bekijken"
+    }
+  }
+}

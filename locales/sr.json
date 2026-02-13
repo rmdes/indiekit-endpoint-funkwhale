@@ -1,0 +1,37 @@
+{
+  "funkwhale": {
+    "title": "Funkwhale",
+    "listenings": "Историја слушања",
+    "favorites": "Омiljени",
+    "stats": "Статистике",
+    "nowPlaying": "Тренутно свира",
+    "recentlyPlayed": "Недавно пуштено",
+    "lastPlayed": "Последње пуштено",
+    "allTime": "Свих времена",
+    "thisWeek": "Ове недеље",
+    "thisMonth": "Овог месеца",
+    "trends": "Трендови",
+    "listeningTrend": "Тренд слушања (30 дана)",
+    "topArtists": "Најбољи извођачи",
+    "topAlbums": "Најбољи албуми",
+    "plays": "репродукција",
+    "tracks": "песама",
+    "artists": "извођача",
+    "albums": "албума",
+    "listeningTime": "Време слушања",
+    "noRecentPlays": "Недавно није пуштена музика",
+    "noFavorites": "Још нема омиљених песама",
+    "viewAll": "Прикажи све",
+    "viewStats": "Прикажи статистике",
+    "sync": "Синхронизуј сада",
+    "lastSync": "Последња синхронизација",
+    "error": {
+      "connection": "Није могуће повезати се са Funkwhale",
+      "noConfig": "Funkwhale крајња тачка није правилно конфигурисана"
+    },
+    "widget": {
+      "description": "Погледајте комплетну активност слушања на јавној страници",
+      "view": "Погледај јавну страницу"
+    }
+  }
+}

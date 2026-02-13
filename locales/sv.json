@@ -1,0 +1,37 @@
+{
+  "funkwhale": {
+    "title": "Funkwhale",
+    "listenings": "Lyssningshistorik",
+    "favorites": "Favoriter",
+    "stats": "Statistik",
+    "nowPlaying": "Spelar nu",
+    "recentlyPlayed": "Nyligen spelad",
+    "lastPlayed": "Senast spelad",
+    "allTime": "Alla tider",
+    "thisWeek": "Denna vecka",
+    "thisMonth": "Denna månad",
+    "trends": "Trender",
+    "listeningTrend": "Lyssningstrend (30 dagar)",
+    "topArtists": "Toppartister",
+    "topAlbums": "Toppalbum",
+    "plays": "spelningar",
+    "tracks": "spår",
+    "artists": "artister",
+    "albums": "album",
+    "listeningTime": "Lyssningstid",
+    "noRecentPlays": "Ingen musik spelad nyligen",
+    "noFavorites": "Inga favoritspår ännu",
+    "viewAll": "Visa alla",
+    "viewStats": "Visa statistik",
+    "sync": "Synkronisera nu",
+    "lastSync": "Senaste synkronisering",
+    "error": {
+      "connection": "Kunde inte ansluta till Funkwhale",
+      "noConfig": "Funkwhale-slutpunkten är inte korrekt konfigurerad"
+    },
+    "widget": {
+      "description": "Visa fullständig lyssningsaktivitet på den offentliga sidan",
+      "view": "Visa offentlig sida"
+    }
+  }
+}

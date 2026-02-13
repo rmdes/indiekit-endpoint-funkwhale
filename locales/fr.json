@@ -1,0 +1,37 @@
+{
+  "funkwhale": {
+    "title": "Funkwhale",
+    "listenings": "Historique d'écoute",
+    "favorites": "Favoris",
+    "stats": "Statistiques",
+    "nowPlaying": "En cours de lecture",
+    "recentlyPlayed": "Récemment écouté",
+    "lastPlayed": "Dernière écoute",
+    "allTime": "Tous temps",
+    "thisWeek": "Cette semaine",
+    "thisMonth": "Ce mois-ci",
+    "trends": "Tendances",
+    "listeningTrend": "Tendance d'écoute (30 jours)",
+    "topArtists": "Artistes principaux",
+    "topAlbums": "Albums principaux",
+    "plays": "lectures",
+    "tracks": "pistes",
+    "artists": "artistes",
+    "albums": "albums",
+    "listeningTime": "Temps d'écoute",
+    "noRecentPlays": "Aucune musique récemment écoutée",
+    "noFavorites": "Pas encore de pistes favorites",
+    "viewAll": "Voir tout",
+    "viewStats": "Voir les statistiques",
+    "sync": "Synchroniser maintenant",
+    "lastSync": "Dernière synchronisation",
+    "error": {
+      "connection": "Impossible de se connecter à Funkwhale",
+      "noConfig": "Le point de terminaison Funkwhale n'est pas configuré correctement"
+    },
+    "widget": {
+      "description": "Afficher l'activité d'écoute complète sur la page publique",
+      "view": "Voir la page publique"
+    }
+  }
+}

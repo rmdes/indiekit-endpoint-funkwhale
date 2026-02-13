@@ -1,0 +1,37 @@
+{
+  "funkwhale": {
+    "title": "Funkwhale",
+    "listenings": "सुनने का इतिहास",
+    "favorites": "पसंदीदा",
+    "stats": "आंकड़े",
+    "nowPlaying": "अभी चल रहा है",
+    "recentlyPlayed": "हाल ही में चलाया गया",
+    "lastPlayed": "अंतिम बार चलाया गया",
+    "allTime": "सभी समय",
+    "thisWeek": "इस सप्ताह",
+    "thisMonth": "इस महीने",
+    "trends": "रुझान",
+    "listeningTrend": "सुनने का रुझान (30 दिन)",
+    "topArtists": "शीर्ष कलाकार",
+    "topAlbums": "शीर्ष एल्बम",
+    "plays": "बार चलाया",
+    "tracks": "ट्रैक",
+    "artists": "कलाकार",
+    "albums": "एल्बम",
+    "listeningTime": "सुनने का समय",
+    "noRecentPlays": "हाल ही में कोई संगीत नहीं चलाया गया",
+    "noFavorites": "अभी तक कोई पसंदीदा ट्रैक नहीं",
+    "viewAll": "सभी देखें",
+    "viewStats": "आंकड़े देखें",
+    "sync": "अभी समन्वयित करें",
+    "lastSync": "अंतिम समन्वयन",
+    "error": {
+      "connection": "Funkwhale से कनेक्ट नहीं हो सका",
+      "noConfig": "Funkwhale एंडपॉइंट सही तरीके से कॉन्फ़िगर नहीं है"
+    },
+    "widget": {
+      "description": "सार्वजनिक पृष्ठ पर पूर्ण सुनने की गतिविधि देखें",
+      "view": "सार्वजनिक पृष्ठ देखें"
+    }
+  }
+}

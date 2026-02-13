@@ -1,0 +1,37 @@
+{
+  "funkwhale": {
+    "title": "Funkwhale",
+    "listenings": "Historia odsłuchów",
+    "favorites": "Ulubione",
+    "stats": "Statystyki",
+    "nowPlaying": "Teraz odtwarzane",
+    "recentlyPlayed": "Ostatnio odtwarzane",
+    "lastPlayed": "Ostatnio odtworzono",
+    "allTime": "Cały czas",
+    "thisWeek": "W tym tygodniu",
+    "thisMonth": "W tym miesiącu",
+    "trends": "Trendy",
+    "listeningTrend": "Trend odsłuchów (30 dni)",
+    "topArtists": "Najlepsi artyści",
+    "topAlbums": "Najlepsze albumy",
+    "plays": "odtworzeń",
+    "tracks": "utworów",
+    "artists": "artystów",
+    "albums": "albumów",
+    "listeningTime": "Czas odsłuchu",
+    "noRecentPlays": "Nie odtworzono ostatnio żadnej muzyki",
+    "noFavorites": "Brak jeszcze ulubionych utworów",
+    "viewAll": "Wyświetl wszystko",
+    "viewStats": "Wyświetl statystyki",
+    "sync": "Synchronizuj teraz",
+    "lastSync": "Ostatnia synchronizacja",
+    "error": {
+      "connection": "Nie można połączyć się z Funkwhale",
+      "noConfig": "Punkt końcowy Funkwhale nie jest poprawnie skonfigurowany"
+    },
+    "widget": {
+      "description": "Zobacz pełną aktywność odsłuchu na stronie publicznej",
+      "view": "Zobacz stronę publiczną"
+    }
+  }
+}

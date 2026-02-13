@@ -1,0 +1,37 @@
+{
+  "funkwhale": {
+    "title": "Funkwhale",
+    "listenings": "Riwayat Mendengarkan",
+    "favorites": "Favorit",
+    "stats": "Statistik",
+    "nowPlaying": "Sedang Diputar",
+    "recentlyPlayed": "Baru Diputar",
+    "lastPlayed": "Terakhir Diputar",
+    "allTime": "Sepanjang Waktu",
+    "thisWeek": "Minggu Ini",
+    "thisMonth": "Bulan Ini",
+    "trends": "Tren",
+    "listeningTrend": "Tren Mendengarkan (30 hari)",
+    "topArtists": "Artis Teratas",
+    "topAlbums": "Album Teratas",
+    "plays": "pemutaran",
+    "tracks": "lagu",
+    "artists": "artis",
+    "albums": "album",
+    "listeningTime": "Waktu Mendengarkan",
+    "noRecentPlays": "Tidak ada musik yang diputar baru-baru ini",
+    "noFavorites": "Belum ada lagu favorit",
+    "viewAll": "Lihat Semua",
+    "viewStats": "Lihat Statistik",
+    "sync": "Sinkronkan Sekarang",
+    "lastSync": "Sinkronisasi terakhir",
+    "error": {
+      "connection": "Tidak dapat terhubung ke Funkwhale",
+      "noConfig": "Endpoint Funkwhale tidak dikonfigurasi dengan benar"
+    },
+    "widget": {
+      "description": "Lihat aktivitas mendengarkan lengkap di halaman publik",
+      "view": "Lihat Halaman Publik"
+    }
+  }
+}
