@@ -9,6 +9,7 @@ import { statsController } from "./lib/controllers/stats.js";
 import { nowPlayingController } from "./lib/controllers/now-playing.js";
 import { startSync } from "./lib/sync.js";
 import { waitForReady } from "@rmdes/indiekit-startup-gate";
+import { FUNKWHALE_BLOCKS } from "./lib/blocks.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -61,6 +62,10 @@ export default class FunkwhaleEndpoint {
       iconName: "syndicate",
       requiresDatabase: true,
     };
+  }
+
+  get blocks() {
+    return FUNKWHALE_BLOCKS;
   }
 
   /**
