@@ -177,8 +177,8 @@ The plugin creates a MongoDB collection with this schema:
   albumId: 222,                 // Album ID (indexed for aggregation)
   coverUrl: "https://...",      // Cover image URL (200x200)
   duration: 180,                // Duration in seconds
-  listenedAt: ISODate("..."),   // When listened (indexed, DESC)
-  syncedAt: ISODate("..."),     // When synced to DB
+  listenedAt: "2025-02-13T14:30:00.000Z", // ISO string, when listened (indexed, DESC)
+  syncedAt: "2025-02-13T14:31:00.000Z",   // ISO string, when synced to DB
 }
 ```
 
@@ -241,6 +241,8 @@ The sync process is incremental:
 - Subsequent syncs: Only fetch listenings newer than the latest in the database
 
 The `listenedAt` field is used to determine the cutoff date.
+
+`listenedAt` must be a string on every record: MongoDB sorts all `Date` values above all strings, so a single legacy `Date` (stored before 1.0.10) pins the "latest" lookup to that record and every sync refetches everything after it. `migrateLegacyDates()` converts them at the start of each sync.
 
 ### 4. Statistics Cache
 
